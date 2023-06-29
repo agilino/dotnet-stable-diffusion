@@ -1,0 +1,48 @@
+version: '3.4'
+
+services:
+  backend-api:
+    image: ${DOCKER_REGISTRY-}backendapi
+    build:
+      context: .
+      dockerfile: backend-api/Dockerfile
+    depends_on:
+      - image-db
+      - redis
+    networks:
+      - image-network
+
+  frontend-web:
+    image: ${DOCKER_REGISTRY-}frontendweb
+    build:
+      context: .
+      dockerfile: frontend-web/Dockerfile
+    depends_on:
+      - image-db
+      - redis
+    networks:
+      - image-network
+
+  image-db:
+    image: postgres:14
+    container_name: image-db
+    restart: unless-stopped
+    ports:
+      - "5005:5432"
+    environment:
+      POSTGRES_DB: image
+      POSTGRES_USER: image
+      POSTGRES_PASSWORD: 123456
+    networks:
+      - image-network
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - image-network
+
+networks:
+  image-network:
+    driver: bridge
