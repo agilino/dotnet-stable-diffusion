@@ -9,6 +9,7 @@ namespace backend_api.Mappers
         public ImageProfile()
         {
             CreateMap<Image, ImageResponseDTO>();
+            CreateMap<List<Image>, List<ImageResponseDTO>>();
         }
     }
 }

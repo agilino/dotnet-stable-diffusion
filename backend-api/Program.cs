@@ -20,6 +20,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "SampleInstance";
 });
 
+
+
 // Add Postgres DB context
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
