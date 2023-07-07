@@ -12,8 +12,16 @@ public class Tests
     }
 
     [Test]
-    public void Test1()
+    public void GetAllImages_givenListOfImage_loadListOfImages()
     {
-        Assert.Pass();
+        var images =  imageService.GetAllImages();
+        Assert.AreEqual(images.First().Name, "");
+    }
+
+    [Test]
+    public void GetAllImages_givenEmptyImages_empty()
+    {
+        var images = imageService.GetAllImages();
+        Assert.AreEqual(images.First().Name, "");
     }
 }

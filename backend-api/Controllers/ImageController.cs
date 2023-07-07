@@ -1,3 +1,5 @@
+using backend_api.DTO;
+using backend_api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
@@ -11,11 +13,13 @@ namespace backend_api.Controllers
     {
         private readonly ILogger<ImageController> _logger;
         private readonly IDistributedCache _cache;
+        private readonly ImageService _imageService;
 
-        public ImageController(ILogger<ImageController> logger, IDistributedCache cache)
+        public ImageController(ILogger<ImageController> logger, IDistributedCache cache, ImageService imageService)
         {
             _logger = logger;
             _cache = cache;
+            _imageService = imageService;
         }
 
         [HttpGet(Name = "GetCounter")]
@@ -41,6 +45,24 @@ namespace backend_api.Controllers
                 result = "Redis cache is not found.";
             }
             return result;
+        }
+
+        [HttpGet]
+        public IActionResult getAllImages() {
+            var dto = _imageService.GetAllImages();
+            return Ok(dto);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult updateImage(Guid id, ImageRequestDTO imageRequestDTO) {
+            _imageService.createImage(imageRequestDTO);
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult createImage(ImageRequestDTO imageRequestDTO) {
+            _imageService.updateImage(imageRequestDTO);
+            return Ok("uuid");
         }
     }
 }
