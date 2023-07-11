@@ -11,7 +11,7 @@ namespace backend_api.Controllers
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.Timeout = TimeSpan.FromMinutes(30);
+                httpClient.Timeout = TimeSpan.FromMinutes(10);
                 string apiUrl = "http://localhost:8000/generate?prompt=" + Uri.EscapeDataString(prompt);
 
                 HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
@@ -19,12 +19,26 @@ namespace backend_api.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var imageStream = await response.Content.ReadAsStreamAsync();
-                    string filePath = "D:/Agilino/Projects/dotnet-stable-diffusion/backend-api/Images/image.png";
+                    string currentDirectory = Directory.GetCurrentDirectory();
+                    string directoryName = "Images";
+                    string directoryPath = Path.Combine(currentDirectory, directoryName);
+
+                    string fileName = "image.png";
+                    string filePath = Path.Combine(directoryPath, fileName);
+
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
                     using (FileStream fs = new FileStream(filePath, FileMode.Create))
                     {
                         await imageStream.CopyToAsync(fs);
                     }
-                    return File(imageStream, "image/png");
+
+                    imageStream.Dispose();
+
+                    return File(filePath, "image/png");
                 }
                 else
                 {
