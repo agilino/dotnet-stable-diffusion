@@ -1,5 +1,11 @@
-html {
+﻿html {
+  position: relative;
+  min-height: 100%;
   font-size: 14px;
+}
+
+body {
+  margin-bottom: 60px;
 }
 
 @media (min-width: 768px) {
@@ -12,25 +18,31 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-div.panel-lib {
-  background-color: #333;
+.title{
+  padding: 16px;
+  font-size: 24px;
+}
+
+.panel-lib {
+  margin-top: 16px;
+  background-color: #ccc;
   overflow: auto;
   white-space: nowrap;
   padding: 10px;
   border-radius: 0.5em;
 }
 
-div.panel-lib img {
+.panel-lib img {
   padding: 10px;
 }
 img{
   border-radius: 0.5em;
 }
-div.pic-result {
+
+.pic-result {
   width: 100%;
   height: 100%;
   padding: 10px;
-  justify-content: center;
 }
 label, input, button {
   font-size: inherit;
@@ -42,11 +54,47 @@ button {
   background-color: #258cfb;
   cursor: pointer;
 }
-html {
-  position: relative;
-  min-height: 100%;
+
+.main-wrapper{
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
-body {
-  margin-bottom: 60px;
+.input-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-wrapper .input-prompt{
+  width: 35%;
+  padding: 12px;
+  outline: none;
+  border: 1px #ccc solid;
+  margin-bottom: 8px;
+}
+
+.input-wrapper .submit-btn{
+  width: 35%;
+  padding: 8px 24px;
+  border-radius: 8px;
+}
+
+.form-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 0 1 auto;
+  border: 1px #f7f7f7 solid;
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 16px;
+}
+
+pic-wrapper{
+  width: 100%;
+  height: auto;
 }
