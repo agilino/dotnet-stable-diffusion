@@ -1,31 +1,29 @@
-@page
+﻿@page "{handler?}"
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="text-center">
-    <h1 class="display-4">Agilino</h1>
-    <h4>Generating art with .NET and Stable Diffusion</h4>
+<div class="main-wrapper">
     @* <p>@ViewData["Message"]</p> *@
-    <form>
-    <div class="h-100">
-    <input class="px-2 py-1 mb-1 h-25" type="text"
-        placeholder="Enter a word to describe" name="Animal"  />
-    <button class="h-100 btn-primary" type="submit"
-        id="btnSubmit">Generate</button>
-    </div>
-    <div class="pic-result">
-        <div class="d-inline-flex">
-            <img src="https://www.w3schools.com/howto/img_5terre.jpg" class="mb-3" alt="Cinque Terre" alt="result">
+    <h4 class="title">Generating art with .NET and Stable Diffusion</h4>
+    <div class="form-wrapper h-100 mb-3">
+        <form class="w-100" asp-page-handler="GenerateImage" method="post">
+            <div class="input-wrapper">
+                <input class="input-prompt" type="text" placeholder="Enter description" name="PromptText" />
+                <button class="btn btn-primary submit-btn" type="submit" id="btnSubmit">Generate</button>
+            </div>
+        </form>
+        <div class="pic-result">
+            <div class="pic-wrapper">
+            <img src="https://www.w3schools.com/howto/img_5terre.jpg" class="mb-3" alt="Cinque Terre" alt="result" width="512px">
+            </div>
+        <div><button class="h-100 w-25 btn btn-outline-primary">Download</button></div>
         </div>
-        <div><button class="h-100 w-25 btn-primary">Download</button></div>
-        
     </div>
-    <div class="panel-lib">
-        <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="50%" height="50%">
-        <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="50%" height="50%">
-        <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="50%" height="50%">
-        <img src="https://www.w3schools.com/howto/img_mountains.jpg" alt="Mountains" width="50%" height="50%">
-    </div>
-    </form>
+</div>
+<div class="panel-lib">
+    <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_mountains.jpg" alt="Mountains" width="auto" height="512px">
 </div>
