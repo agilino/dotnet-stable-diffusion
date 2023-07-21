@@ -13,10 +13,11 @@ namespace backend_api.Controllers
             _imageGenerationService = imageGenerationService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GeneratePNGImage([FromQuery] string prompt)
+        [HttpGet("{prompt}")]
+        public async Task<FileStreamResult> GeneratePNGImageAsync(string prompt)
         {
-            return await _imageGenerationService.GenerateImage(prompt);
+            var imageBytes = await _imageGenerationService.GenerateImage(prompt);
+            return imageBytes;
         }
 
         [HttpGet("gallery")]

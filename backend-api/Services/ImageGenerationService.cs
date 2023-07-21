@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using backend_api.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend_api.Services
 {
     public class ImageGenerationService : IImageGenerationService
     {
+        private const int STREAM_FIRST_POSITION = 0;
         private readonly IConfiguration _configuration;
         private readonly string _imagesDirectory;
         public ImageGenerationService(IConfiguration configuration)
@@ -11,7 +13,7 @@ namespace backend_api.Services
             _configuration = configuration;
             _imagesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
         }
-        public async Task<IActionResult> GenerateImage(string prompt)
+        public async Task<FileStreamResult> GenerateImage(string prompt)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -39,17 +41,12 @@ namespace backend_api.Services
                     {
                         await imageStream.CopyToAsync(fs);
                     }
-
-                    imageStream.Dispose();
-
-                    return new PhysicalFileResult(filePath, "image/png")
-                    {
-                        FileDownloadName = fileName
-                    };
+                    imageStream.Position = STREAM_FIRST_POSITION;
+                    return new FileStreamResult(imageStream, "image/png");
                 }
                 else
                 {
-                    return new StatusCodeResult((int)response.StatusCode);
+                    return new FileStreamResult(new MemoryStream(), "image/png");
                 }
             }
         }
