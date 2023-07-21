@@ -2,26 +2,49 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    var imageUrl = TempData["GeneratedImageUrl"] as string;
+    var promptText = ViewData["PromptText"] as string;
 }
 <div class="main-wrapper">
-    @* <p>@ViewData["Message"]</p> *@
     <h4 class="title">Generating art with .NET and Stable Diffusion</h4>
     <div class="form-wrapper h-100 mb-3">
         <form class="w-100" asp-page-handler="GenerateImage" method="post">
             <div class="input-wrapper">
-                <input class="input-prompt" type="text" placeholder="Enter description" name="PromptText" />
-                <button class="btn btn-primary submit-btn" type="submit" id="btnSubmit">Generate</button>
+                <input class="input-prompt" type="text" placeholder="Enter description" name="promptText"/>
+                    <button class="btn btn-primary submit-btn" type="submit" id="btnSubmit">Generate</button>
             </div>
         </form>
-        <div class="pic-result">
-            <div class="pic-wrapper">
-            <img src="https://www.w3schools.com/howto/img_5terre.jpg" class="mb-3" alt="Cinque Terre" alt="result" width="512px">
-            </div>
-        <div><button class="h-100 w-25 btn btn-outline-primary">Download</button></div>
-        </div>
+        @{
+            if(!string.IsNullOrEmpty(@imageUrl))
+            {
+                <div class="pic-result">
+                    <div class="pic-wrapper">
+                        <img src="@imageUrl" class="mb-3" alt="result" width="512px">
+                        <div class="">
+                            @imageUrl
+                        </div>
+                    </div>
+                    <div>
+                        <button class="h-100 w-25 btn btn-outline-primary">Download</button>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
 <div class="panel-lib">
+    <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_mountains.jpg" alt="Mountains" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_mountains.jpg" alt="Mountains" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="auto" height="512px">
+    <img src="https://www.w3schools.com/howto/img_mountains.jpg" alt="Mountains" width="auto" height="512px">
     <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="auto" height="512px">
     <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="auto" height="512px">
     <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="auto" height="512px">
