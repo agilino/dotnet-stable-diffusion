@@ -4,7 +4,6 @@
     ViewData["Title"] = "Home page";
 }
 <div class="main-wrapper">
-    @* <p>@ViewData["Message"]</p> *@
     <h4 class="title">Generating art with .NET and Stable Diffusion</h4>
     <div class="form-wrapper h-100 mb-3">
         <form class="w-100" asp-page-handler="GenerateImage" method="post">
@@ -15,9 +14,10 @@
         </form>
         <div class="pic-result">
             <div class="pic-wrapper">
-            <img src="https://www.w3schools.com/howto/img_5terre.jpg" class="mb-3" alt="Cinque Terre" alt="result" width="512px">
+                <img src='http://localhost:5068/api/ImageGeneration/@TempData["ImageUrl"]' class="mb-3" alt="Cinque Terre" alt="result" width="512px">
+                <text></text>
             </div>
-        <div><button class="h-100 w-25 btn btn-outline-primary">Download</button></div>
+            <div><button class="h-100 w-25 btn btn-outline-primary">Download</button></div>
         </div>
     </div>
 </div>
