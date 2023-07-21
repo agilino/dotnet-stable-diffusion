@@ -11,45 +11,46 @@ namespace backend_api.Services
             _configuration = configuration;
             _imagesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
         }
-        public async Task<IActionResult> GenerateImage(string prompt)
+public async Task<IActionResult> GenerateImage(string prompt)
         {
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(10);
                 string apiUrl = _configuration["ApiUrl"] + "?prompt=" + Uri.EscapeDataString(prompt);
-
                 HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
                 if (response.IsSuccessStatusCode)
                 {
                     var imageStream = await response.Content.ReadAsStreamAsync();
                     string currentDirectory = Directory.GetCurrentDirectory();
                     string directoryName = "Images";
                     string directoryPath = Path.Combine(currentDirectory, directoryName);
-
                     string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
                     string filePath = Path.Combine(directoryPath, fileName);
-
                     if (!Directory.Exists(directoryPath))
                     {
                         Directory.CreateDirectory(directoryPath);
                     }
-
                     using (FileStream fs = new FileStream(filePath, FileMode.Create))
                     {
                         await imageStream.CopyToAsync(fs);
                     }
-
                     imageStream.Dispose();
-
-                    return new PhysicalFileResult(filePath, "image/png")
+                    byte[] imageData;
+                    using (var memoryStream = new MemoryStream())
                     {
-                        FileDownloadName = fileName
-                    };
+                        using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                        {
+                            await fs.CopyToAsync(memoryStream);
+                        }
+                        imageData = memoryStream.ToArray();
+                    }
+                    // Clean up: Delete the physical image file
+                    //File.Delete(filePath);
+                    return new FileContentResult(imageData, "image/png");
                 }
                 else
                 {
-                    return new StatusCodeResult((int)response.StatusCode);
+                    return null;
                 }
             }
         }
