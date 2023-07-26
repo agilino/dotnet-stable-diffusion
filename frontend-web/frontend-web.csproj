@@ -9,4 +9,8 @@
     <UserSecretsId>8ba32c50-9b75-4bee-9014-b0392fca2298</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
 </Project>
