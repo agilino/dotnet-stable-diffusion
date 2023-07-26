@@ -14,10 +14,16 @@ namespace backend_api.Controllers
         }
 
         [HttpGet("{prompt}")]
-        public async Task<FileStreamResult> GeneratePNGImageAsync(string prompt)
+        public async Task<string> GeneratePNGImage(string prompt)
         {
             var imageBytes = await _imageGenerationService.GenerateImage(prompt);
             return imageBytes;
+        }
+
+        [HttpGet("download/{image-name}")]
+        public IActionResult DownloadImage([FromRoute(Name = "image-name")] string imageName)
+        {
+            return _imageGenerationService.DownloadImage(imageName);
         }
 
         [HttpGet("gallery")]
@@ -27,15 +33,10 @@ namespace backend_api.Controllers
             return Ok(imageUrls);
         }
 
-        [HttpGet("image/{imageName}")]
-        public IActionResult GetImage(string imageName)
+        [HttpGet("image/{image-name}")]
+        public IActionResult GetImage([FromRoute(Name = "image-name")] string imageName)
         {
             byte[] imageBytes = _imageGenerationService.GetOneImage(imageName);
-            if (imageBytes == null)
-            {
-                return NotFound();
-            }
-
             return File(imageBytes, "image/png");
         }
     }
