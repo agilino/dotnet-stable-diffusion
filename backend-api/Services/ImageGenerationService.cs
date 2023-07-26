@@ -13,7 +13,7 @@ namespace backend_api.Services
             _configuration = configuration;
             _imagesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
         }
-        public async Task<FileStreamResult> GenerateImage(string prompt)
+        public async Task<string> GenerateImage(string prompt)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -41,15 +41,34 @@ namespace backend_api.Services
                     {
                         await imageStream.CopyToAsync(fs);
                     }
-                    imageStream.Position = STREAM_FIRST_POSITION;
-                    return new FileStreamResult(imageStream, "image/png");
+                    return fileName;
                 }
                 else
                 {
-                    return new FileStreamResult(new MemoryStream(), "image/png");
+                    return "";
                 }
             }
         }
+
+        public IActionResult DownloadImage(string imageName)
+        {
+            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+            string filePath = Path.Combine(directoryPath, imageName);
+
+            if (File.Exists(filePath))
+            {
+                string contentType = "image/png";
+                return new PhysicalFileResult(filePath, contentType)
+                {
+                    FileDownloadName = Path.GetFileName(filePath)
+                };
+            }
+            else
+            {
+                return new NotFoundResult();
+            }
+        }
+
         public List<string> GetAllImages()
         {
             string[] imageFiles = Directory.GetFiles(_imagesDirectory);
@@ -59,7 +78,7 @@ namespace backend_api.Services
             foreach (string imageFile in imageFiles)
             {
                 string imageName = Path.GetFileName(imageFile);
-                string imageUrl = $"api/ImageGallery/image/{imageName}";
+                string imageUrl = $"{_configuration["ImageUrl"]}{imageName}";
                 imageUrls.Add(imageUrl);
             }
 
@@ -69,12 +88,6 @@ namespace backend_api.Services
         public byte[] GetOneImage(string imageName)
         {
             string imagePath = Path.Combine(_imagesDirectory, imageName);
-
-            if (!File.Exists(imagePath))
-            {
-                return null;
-            }
-
             return File.ReadAllBytes(imagePath);
         }
     }

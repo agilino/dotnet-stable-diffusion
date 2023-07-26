@@ -2,47 +2,56 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
+using Newtonsoft.Json;
+
 namespace frontend_web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly IConfiguration _configuration;
-        private readonly HttpClient _httpClient;
-        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration, IHttpClientFactory httpClientFactory)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public List<string> ImageUrls { get; set; }
+
+        public IndexModel(IHttpClientFactory httpClientFactory)
         {
-            _logger = logger;
-            _configuration = configuration;
-            _httpClient = httpClientFactory.CreateClient();
+            _httpClientFactory = httpClientFactory;
         }
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
-            using (var client = new HttpClient())
+            ImageUrls = await GetImageUrlsFromApi();
+        }
+        private async Task<List<string>> GetImageUrlsFromApi()
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            string apiUrl = "http://localhost:5068/api/ImageGeneration/gallery";
+
+            var response = await httpClient.GetAsync(apiUrl);
+
+            if (response.IsSuccessStatusCode)
             {
-                var request = new HttpRequestMessage();
-                // webapi is the container name
-                // Run within network of docker
-                //request.RequestUri = new Uri("http://webapi/Counter");
-                request.RequestUri = new Uri(_configuration["backend-api-path"] + "/Image");
-                // run via localhost
-                var response = await client.SendAsync(request);
-                string counter = await response.Content.ReadAsStringAsync();
-                ViewData["Message"] = $"Counter value from cache :{counter}";
+                var content = await response.Content.ReadAsStringAsync();
+                var imageUrls = JsonConvert.DeserializeObject<List<string>>(content);
+                return imageUrls;
             }
+
+            return new List<string>();
         }
         public async Task<IActionResult> OnPostGenerateImage()
         {
-            // const string GEN_IMAGE_PATH = "/ImageGeneration/";
             string prompt = Request.Form["PromptText"];
-            // var response = await _httpClient.PostAsync(_configuration["backend-api-path"] + GEN_IMAGE_PATH + "?prompt=" + prompt, null);
-            // if (response.IsSuccessStatusCode)
-            // {
-            //     var imageStream =  await response.Content.ReadAsStreamAsync();
-            //     imageStream.ReadByte();
-            //     TempData["ImageUrl"] = imageStream;
-            // }
-            TempData["ImageUrl"] = prompt;
-            return RedirectToPage("/Index");
+            var httpClient = _httpClientFactory.CreateClient();
+
+            string apiUrl = "http://localhost:5068/api/ImageGeneration/" + Uri.EscapeDataString(prompt);
+
+            var response = await httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                if(response.Content != null)
+                {
+                    TempData["ImageName"] = await response.Content.ReadAsStringAsync();
+                }
+            }
+            return Redirect("/Index");
         }
     }
 }

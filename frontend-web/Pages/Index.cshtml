@@ -14,16 +14,40 @@
         </form>
         <div class="pic-result">
             <div class="pic-wrapper">
-                <img src='http://localhost:5068/api/ImageGeneration/@TempData["ImageUrl"]' class="mb-3" alt="Cinque Terre" alt="result" width="512px">
-                <text></text>
+                @if (TempData["ImageName"] != null)
+                {
+                    <img id="generatedImage" src='http://localhost:5068/api/ImageGeneration/image/@TempData["ImageName"]' class="mb-3" alt="Generated Image" style="width:512px;">
+                    <div>
+                        <a href="http://localhost:5068/api/ImageGeneration/download/@TempData["ImageName"]">
+                            <button class="h-100 w-25 btn btn-outline-primary">Download</button>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <img src="https://s.net.vn/0Oxu" class="mb-3" alt="Default Image" style="width:200px;">
+                    <div>
+                        <button class="h-100 w-25 btn btn-outline-primary" style="display: none;">Download</button>
+                    </div>
+                }
             </div>
-            <div><button class="h-100 w-25 btn btn-outline-primary">Download</button></div>
         </div>
     </div>
 </div>
 <div class="panel-lib">
-    <img src="https://www.w3schools.com/howto/img_5terre.jpg" alt="Cinque Terre" width="auto" height="512px">
-    <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="Forest" width="auto" height="512px">
-    <img src="https://www.w3schools.com/howto/img_lights.jpg" alt="Northern Lights" width="auto" height="512px">
-    <img src="https://www.w3schools.com/howto/img_mountains.jpg" alt="Mountains" width="auto" height="512px">
+    @if (Model.ImageUrls.Count > 0)
+    {
+        <div class="image-gallery">
+            @foreach (var imageUrl in Model.ImageUrls)
+            {
+                <img src="@imageUrl" onclick="downloadImage" alt="Image">
+            }
+        </div>
+    }
+    else
+    {
+        <p>No images found.</p>
+    }
 </div>
+
+
