@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace frontend_web.Pages
 {
@@ -41,9 +42,10 @@ namespace frontend_web.Pages
             string prompt = Request.Form["PromptText"];
             var httpClient = _httpClientFactory.CreateClient();
 
-            string apiUrl = "http://localhost:5068/api/ImageGeneration/" + Uri.EscapeDataString(prompt);
-
-            var response = await httpClient.GetAsync(apiUrl);
+            string apiUrl = "http://localhost:5068/api/ImageGeneration";
+            string jsonRequest = JsonConvert.SerializeObject(Uri.EscapeDataString(prompt));
+            HttpContent httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(apiUrl, httpContent);
             if (response.IsSuccessStatusCode)
             {
                 if(response.Content != null)
