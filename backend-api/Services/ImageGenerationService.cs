@@ -1,5 +1,4 @@
-﻿using backend_api.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace backend_api.Services
 {
