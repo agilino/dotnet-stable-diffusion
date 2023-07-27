@@ -13,12 +13,14 @@ namespace backend_api.Controllers
             _imageGenerationService = imageGenerationService;
         }
 
-        [HttpPost]
-        public async Task<string> GeneratePNGImage([FromBody]string prompt)
-        {
-            var imageName = await _imageGenerationService.GenerateImage(prompt);
-            return imageName;
-        }
+        /*------------------------------------------------
+
+        //TODO: Create an endpoint using GenerateImage service and return an image name
+        Hint: Receive a string input name "prompt" from client and use as a Post moethod
+
+        
+
+        -----------------------------------------------*/
 
         [HttpGet("download/{image-name}")]
         public IActionResult DownloadImage([FromRoute(Name = "image-name")] string imageName)

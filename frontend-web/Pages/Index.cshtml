@@ -38,10 +38,10 @@
     @if (Model.ImageUrls.Count > 0)
     {
         <div class="image-gallery">
-            @foreach (var imageUrl in Model.ImageUrls)
-            {
-                <img src="@imageUrl" onclick="downloadImage" alt="Image">
-            }
+            <!-- ---------------------------------
+                @*TODO: Display image list received from the GetImageUrlsFromApi*@
+                Hint: Using PageModel and loop 
+                ----------------------------------------------->
         </div>
     }
     else

@@ -22,20 +22,13 @@ namespace frontend_web.Pages
         }
         private async Task<List<string>> GetImageUrlsFromApi()
         {
-            var httpClient = _httpClientFactory.CreateClient();
-
-            string apiUrl = "http://localhost:5068/api/ImageGeneration/gallery";
-
-            var response = await httpClient.GetAsync(apiUrl);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var imageUrls = JsonConvert.DeserializeObject<List<string>>(content);
-                return imageUrls;
-            }
-
-            return new List<string>();
+            return await Task.FromResult(new List<string>());
+            /*---------------------------------
+            //TODO: Connect to back-end API and return list image urls
+            Given back-end URL: "http://localhost:5068/api/ImageGeneration/gallery"
+            Hint: Call API and convert response to get list image urls
+            Return type: List<string>
+            ----------------------------------*/
         }
         public async Task<IActionResult> OnPostGenerateImage()
         {
@@ -48,7 +41,7 @@ namespace frontend_web.Pages
             var response = await httpClient.PostAsync(apiUrl, httpContent);
             if (response.IsSuccessStatusCode)
             {
-                if(response.Content != null)
+                if (response.Content != null)
                 {
                     TempData["ImageName"] = await response.Content.ReadAsStringAsync();
                 }

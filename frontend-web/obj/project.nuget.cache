@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "tG3rH/55PUAiXsl2QZmdnwE04On5kPvYc6AnTtPfA9DKsmbpzYxuxNrZoiNSS2EHOtPGGhgpO3qDysZZWqu4IA==",
+  "dgSpecHash": "WjW9PYmfqfvQc6zWU/HE75N7Gh6DXj3el84UpYOj48ONYkEuoQcCRqtiEHkSB72R46weOPK1hIzzV82sZ9Fihg==",
   "success": true,
-  "projectFilePath": "D:\\Agilino\\Projects\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\Working\\Workshop\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -13,42 +13,16 @@ namespace backend_api.Services
             _configuration = configuration;
             _imagesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
         }
-        public async Task<string> GenerateImage(string prompt)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.Timeout = TimeSpan.FromMinutes(10);
-                string apiUrl = _configuration["ApiUrl"] + "?prompt=" + Uri.EscapeDataString(prompt);
+        /*------------------------------------------------*/
+        //GenerateImage Service
+        //TODO: Call stable diffusion api to generate an image from input prompt
+        //and return an image name after stored.
+        //Steps to do:
+        //Step 1: Connect to stable diffusion api
+        //Step 2: Store the returned image to Images folder in Directory
+        //Step 3: Return the image name.
 
-                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var imageStream = await response.Content.ReadAsStreamAsync();
-                    string currentDirectory = Directory.GetCurrentDirectory();
-                    string directoryName = "Images";
-                    string directoryPath = Path.Combine(currentDirectory, directoryName);
-
-                    string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
-                    string filePath = Path.Combine(directoryPath, fileName);
-
-                    if (!Directory.Exists(directoryPath))
-                    {
-                        Directory.CreateDirectory(directoryPath);
-                    }
-
-                    using (FileStream fs = new FileStream(filePath, FileMode.Create))
-                    {
-                        await imageStream.CopyToAsync(fs);
-                    }
-                    return fileName;
-                }
-                else
-                {
-                    return "";
-                }
-            }
-        }
+        /*-----------------------------------------------*/
 
         public IActionResult DownloadImage(string imageName)
         {

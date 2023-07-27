@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Agilino\\Projects\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\Working\\Workshop\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj": {}
   },
   "projects": {
-    "D:\\Agilino\\Projects\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj": {
+    "C:\\Users\\Admin\\Desktop\\Working\\Workshop\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Agilino\\Projects\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Working\\Workshop\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj",
         "projectName": "frontend-web",
-        "projectPath": "D:\\Agilino\\Projects\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\Agilino\\Projects\\dotnet-stable-diffusion\\frontend-web\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\Working\\Workshop\\dotnet-stable-diffusion\\frontend-web\\frontend-web.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\Working\\Workshop\\dotnet-stable-diffusion\\frontend-web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.305\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +40,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -59,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.305\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }
